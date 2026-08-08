@@ -7,11 +7,11 @@ import { TransactionStatus } from "genlayer-js/types";
 const account = createAccount();
 const client = createClient({ chain: studionet, account });
 const code = fs.readFileSync(
-  path.resolve(process.cwd(), "contracts/QuorumFeedRegistry.py"),
+  path.resolve(process.cwd(), "contracts/QuorumFeedCanonicalRegistry.py"),
   "utf8"
 );
 
-console.log(`Deploying QuorumFeedRegistry as ${account.address} ...`);
+console.log(`Deploying QuorumFeedCanonicalRegistry as ${account.address} ...`);
 const transactionHash = await client.deployContract({ account, code, args: [] });
 console.log(`transactionHash=${transactionHash}`);
 const receipt = (await client.waitForTransactionReceipt({

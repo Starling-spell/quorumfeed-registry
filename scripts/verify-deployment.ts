@@ -21,7 +21,7 @@ const [schema, deployedCode] = await Promise.all([
   client.getContractSchema(address), client.getContractCode(address)
 ]);
 const localCode = fs.readFileSync(
-  path.resolve(process.cwd(), "contracts/QuorumFeedRegistry.py"), "utf8"
+  path.resolve(process.cwd(), "contracts/QuorumFeedCanonicalRegistry.py"), "utf8"
 );
 const sha256 = (value: string) =>
   createHash("sha256").update(value.replace(/\r\n/g, "\n")).digest("hex");

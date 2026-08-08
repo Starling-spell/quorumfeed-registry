@@ -7,7 +7,7 @@ const client = createClient({ chain: studionet });
 const record = await client.readContract({
   address,
   functionName: "get_latest",
-  args: ["btc.usd.reference"]
+  args: ["btc.usd.canonical"]
 }) as Record<string, any>;
 console.log(JSON.stringify({
   contractAddress: address,
@@ -16,8 +16,12 @@ console.log(JSON.stringify({
   value: record.value,
   decimals: record.decimals,
   unit: record.unit,
+  canonicalValue: record.canonical_value,
+  canonicalTick: record.canonical_tick,
   sourceCount: record.source_count,
-  sourceValues: record.source_values,
-  spreadBps: record.spread_bps,
+  inlierCount: record.inlier_count,
+  outlierCount: record.outlier_count,
+  sourceStatuses: record.source_statuses,
+  verificationMode: record.verification_mode,
   verified: record.verified
 }, null, 2));

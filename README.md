@@ -1,18 +1,20 @@
-# QuorumFeed Registry
+# QuorumFeed Canonical Registry
 
-QuorumFeed is a reusable GenLayer primitive for turning several public numeric
-JSON feeds into one consensus-verified fixed-point observation. It is designed
+QuorumFeed Canonical is a reusable GenLayer primitive for turning several public
+numeric JSON feeds into one **exact validator-agreed** fixed-point observation. It is designed
 for autonomous agents and contracts that need exchange rates, commodity values,
 weather measurements, benchmark metrics, or other web-native numeric facts
 without trusting one API or one validator.
 
-## What is new about the approach
+## Canonical v2: exact public oracle result
 
-The contract implements a **quorum of quorums**. It first derives a median from
-multiple independent sources and removes configured outliers. GenLayer
-validators then independently re-fetch all sources and verify each leader datum
-and the aggregate within explicit basis-point tolerances. There is no LLM and no
-"well-formed output" shortcut.
+This v2 contract replaces the earlier tolerance-only implementation. Each
+validator independently re-fetches **every** configured source, recomputes
+inlier/outlier status and the inlier median, then quantizes it at a bounded
+canonical tick. Consensus requires exact equality of the entire stored public
+record: `value`, `canonical_value`, tick, source count, inlier/outlier counts,
+and every source status. Raw API values are proof-only and are never stored as a
+verified oracle value. There is no LLM and no format-only validation.
 
 ## Consumer interface
 
@@ -25,7 +27,8 @@ and the aggregate within explicit basis-point tolerances. There is no LLM and no
 
 Each source specifies an HTTPS URL and a dotted JSON path. Array indexes are
 supported as numeric path segments. Values are converted to fixed-point integers
-at the feed's declared decimal precision.
+at the feed's declared decimal precision. `canonical_tick` must be no larger
+than one whole declared unit, preventing coarse verified values.
 
 ## Example feed
 
@@ -36,21 +39,22 @@ at the feed's declared decimal precision.
 ]
 ```
 
-With `decimals=2`, a stored value of `6321450` means `63,214.50 USD`.
+With `decimals=2`, a stored value of `6325400` means `63,254.00 USD`; a tick of
+`100` means all validators must agree on the same whole-dollar canonical result.
 
 ## Verification
 
 ```powershell
-genvm-lint check contracts\QuorumFeedRegistry.py
+genvm-lint check contracts\QuorumFeedCanonicalRegistry.py
 python -m pytest tests\direct -v
 python -m pytest tests\unit -v
 npm install
 npm run typecheck
 ```
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the trust boundary and exact
-equivalence rule. Deployment addresses and live transaction evidence are kept in
-`DEPLOYMENT_EVIDENCE.md` after deployment.
+See [CANONICAL_INVARIANT.md](CANONICAL_INVARIANT.md) for the exact stored-value,
+source-status, and validator equivalence rules. Deployment addresses and live
+transaction evidence are kept in `DEPLOYMENT_EVIDENCE.md` after deployment.
 
 ## License
 
