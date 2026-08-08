@@ -20,6 +20,7 @@ console.log(JSON.stringify({
   hash: safe.hash,
   status: safe.status_name,
   consensus: safe.result_name,
+  contractAddress: safe.data?.contract_address ?? safe.txDataDecoded?.contractAddress,
   agree: votes.filter((vote) => vote === "agree").length,
   disagree: votes.filter((vote) => vote === "disagree").length,
   executions

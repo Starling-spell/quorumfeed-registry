@@ -3,11 +3,12 @@ import { studionet } from "genlayer-js/chains";
 
 const address = process.env.CONTRACT_ADDRESS as `0x${string}` | undefined;
 if (!address) throw new Error("Set CONTRACT_ADDRESS.");
+const feedId = process.env.FEED_ID ?? "btc.usd.canonical";
 const client = createClient({ chain: studionet });
 const record = await client.readContract({
   address,
   functionName: "get_latest",
-  args: ["btc.usd.canonical"]
+  args: [feedId]
 }) as Record<string, any>;
 console.log(JSON.stringify({
   contractAddress: address,

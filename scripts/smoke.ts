@@ -6,6 +6,7 @@ const contractAddress = process.env.CONTRACT_ADDRESS;
 if (!contractAddress) throw new Error("Set CONTRACT_ADDRESS.");
 const sourceCommit = process.env.SOURCE_COMMIT;
 if (!sourceCommit) throw new Error("Set SOURCE_COMMIT to a public Git commit SHA.");
+const feedId = process.env.FEED_ID ?? "btc.usd.canonical";
 const account = createAccount();
 const client = createClient({ chain: studionet, account });
 const sourceBase = `https://raw.githubusercontent.com/Starling-spell/quorumfeed-registry/${sourceCommit}/fixtures/canonical`;
@@ -45,10 +46,12 @@ async function write(methodName: string, args: any[]) {
   return hash;
 }
 
-await write("create_feed", [
-  "btc.usd.canonical", "BTC/USD canonical reproducibility feed", "USD", 2,
-  2, 300, 100, sources
-]);
+if (process.env.SKIP_CREATE !== "true") {
+  await write("create_feed", [
+    feedId, "BTC/USD canonical reproducibility feed", "USD", 2,
+    2, 300, 100, sources
+  ]);
+}
 const observationId = `btc.usd.${Date.now()}`;
-const observationHash = await write("observe", ["btc.usd.canonical", observationId]);
+const observationHash = await write("observe", [feedId, observationId]);
 console.log(JSON.stringify({ observationId, observationHash }, null, 2));
