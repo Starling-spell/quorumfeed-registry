@@ -11,5 +11,6 @@ QuorumFeed Canonical is a reusable GenLayer numeric-web oracle with an exact val
 **Evidence:**
 
 - GitHub: https://github.com/Starling-spell/quorumfeed-registry
-- Corrected v2 contract: pending deployment
-- Corrected v2 live observation: pending deployment
+- Corrected v2 contract: https://explorer-studio.genlayer.com/address/0x6Fd6ACA146cBAa99088C92D8AAEe01f6b20A6cb6
+- Corrected v2 deployment: https://explorer-studio.genlayer.com/tx/0x3bcb70c516c94a78109d7650227c70ce412888a1a8c642501f18543e5356300a
+- Corrected v2 live observation: https://explorer-studio.genlayer.com/tx/0x5f1a47adc087482f86890381eeeac887bb07772ab43c4db0f09ffb9a0347f083

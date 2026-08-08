@@ -56,6 +56,15 @@ See [CANONICAL_INVARIANT.md](CANONICAL_INVARIANT.md) for the exact stored-value,
 source-status, and validator equivalence rules. Deployment addresses and live
 transaction evidence are kept in `DEPLOYMENT_EVIDENCE.md` after deployment.
 
+## Live StudioNet proof
+
+The corrected v2 registry is deployed at
+[`0x6Fd6ACA146cBAa99088C92D8AAEe01f6b20A6cb6`](https://explorer-studio.genlayer.com/address/0x6Fd6ACA146cBAa99088C92D8AAEe01f6b20A6cb6).
+Its [canonical-outlier observation](https://explorer-studio.genlayer.com/tx/0x5f1a47adc087482f86890381eeeac887bb07772ab43c4db0f09ffb9a0347f083)
+finalized with 3/3 agreement and stores the exact canonical value plus the
+recomputed `2 inlier / 1 outlier` source status record. See
+[DEPLOYMENT_EVIDENCE.md](DEPLOYMENT_EVIDENCE.md) for reproducible evidence.
+
 ## License
 
 MIT
